@@ -1,0 +1,26 @@
+﻿@model Product 
+
+@{
+    ViewData["Title"] = "Delete Product";
+}
+
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="ProductId" />
+      <div class="container">
+        <div class="mb-2">
+            <label asp-for="ProductName" class="control-label"></label>
+            <input asp-for="ProductName" class="form-control" readonly />
+        </div>
+        <div class="mb-2">
+            <label  class ="control-label">Category</label>
+            <select asp-for="CategoryId_"  class="form-control" asp-items="ViewBag.Categories" disabled>
+                <option><----select Category-----></option>
+            </select>
+        </div>
+        <div>
+            <input type="submit" value="Delete Product" class="btn btn-danger btn-sm">
+        </div>
+
+    </div>
+</form>

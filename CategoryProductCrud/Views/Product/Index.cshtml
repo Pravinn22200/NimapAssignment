@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Product>
+
+@{
+    ViewData["Title"] = "Product List"; 
+}
+
+<p>
+    <a asp-action ="create" class="btn btn-primary">Create new Product</a>
+</p>
+<table class="table table-bordered table-responsive table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Categories.CategoryId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Categories.CategoryName)
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if(Model != null && Model.Any())
+        {
+            @foreach(var product in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => product.ProductId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => product.ProductName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => product.Categories.CategoryId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => product.Categories.CategoryName)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@product.ProductId" class="btn btn-success btn-sm">Edit</a>
+                    
+                        <a asp-action="Delete" asp-route-id="@product.ProductId" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            }
+
+        }
+        else
+        {
+           <tr>
+               <td colspan="2">
+                    <div> Products availble in table</div>
+               </td>
+           </tr> 
+        }
+
+        <div class="pager">
+            
+            <span>
+                 @if (ViewBag.CurrentPage > 1)
+            {
+                @Html.ActionLink("Previous", "Index", new { page = ViewBag.CurrentPage - 1 })
+            }
+            </span>
+            <span>@if (ViewBag.CurrentPage < Math.Ceiling((double)ViewBag.TotalRecords / ViewBag.PageSize))
+            {
+                    @Html.ActionLink(" Next", "Index", new { page = ViewBag.CurrentPage + 1 })
+              }
+            </span>
+            <span>Page @ViewBag.CurrentPage of @ViewBag.PageSize</span>
+        </div>
+    </tbody>
+</table>
